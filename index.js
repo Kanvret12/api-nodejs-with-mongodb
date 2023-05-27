@@ -53,6 +53,11 @@ app.get('/anime', isAuthenticated, async(req, res) => {
   let { apikey, username, email } = getinfo
   res.render('anime', { layout: false, apikey: apikey, username: username, email: email })
 })
+app.get('/generator', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id)
+  let { apikey, username, email } = getinfo
+  res.render('generator', { layout: false, apikey: apikey, username: username, email: email })
+})
 
 
 
