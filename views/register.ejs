@@ -1,0 +1,67 @@
+<!-- <html>
+    <head>
+        <link rel="stylesheet" href="/assets/css/user/loginreg.css">
+    </head>
+    <body style="background-size: 100%;">
+        <div class="login">
+            <h1>Log In</h1>
+            <form action="/users/login" method="post">
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit" class="kotak">Login</button>
+            </form>
+            <span style="color: white; width: max-content; ">not have an account? <a href="/users/register" style="text-decoration: none; font-weight: bold; color: red;">Login</a></span>
+        </div>
+    </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/user/alert.css">
+    <link rel="stylesheet" href="/assets/css/user/loginreg2.css">
+    <style></style>
+    <title>Register</title>
+
+</head>
+<body translate="no">
+   <div class="box">
+        <div class="container">
+            <%- include('layouts/msg')  %> 
+            <%- include('layouts/errors')  %> 
+            <h1>Register</h1>
+            <form action="/users/register" method="post">
+                <div class="input-aw">
+                    <i class='bx bx-user' ></i>
+                 <input name="email" type="text" class="input" placeholder="email" id="">
+                </div>
+                <div class="input-aw">
+                    <i class='bx bx-user' ></i>
+                 <input name="username" type="text" class="input" placeholder="Username" id="">
+                </div>
+                <div class="input-aw">
+                    <i class='bx bx-lock-alt' id="anu"></i>
+                    <input name="password" type="Password" class="input" placeholder="Password" id="">
+                </div>
+                <div class="input-aw">
+                    <i class='bx bx-lock-alt' id="anu"></i>
+                    <input name="confirmPassword" type="Password" class="input" placeholder="Password" id="">
+                </div>
+                <div class="input-awa">
+                    <button type="submit" class="kotak">Log-in</button>
+                </div>
+                <br>
+                <div style="display: flex; align-items: center;">
+                    <span style="text-align: center; color: white; width: 100%; font-size: 15px;">Don't have an account &nbsp; ?</span>
+                    <a href="/users/register" style="text-decoration: none; font-weight: bold; font-size: 20px; font-family: 'Courier New', Courier, monospace; color: red;">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>  
+</body>
+</html>
