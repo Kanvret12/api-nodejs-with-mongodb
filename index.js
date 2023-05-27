@@ -45,7 +45,7 @@ const userRouters = require('./routes/users');
 const ig = require('./routes/instagram');
 
 app.use('/api', apiRouters);
-app.use('/isntagram', ig);
+app.use('/instagram', ig);
 app.use('/users', userRouters);
 
 app.get('/', isAuthenticated, async(req, res) => {
