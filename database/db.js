@@ -38,7 +38,7 @@ const { Token } = require('./verifikasi');
 
     async function getApikey(id) {
         let users = await User.findOne({_id: id});
-        return {apikey: users.apikey, email: users.email};
+        return {apikey: users.apikey, email: users.email, username: users.username};
     }
     module.exports.getApikey = getApikey;
 
