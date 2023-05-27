@@ -7,5 +7,6 @@ module.exports = {
     keyAi: 'Bearer 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',
     email: 'saumamardhatullah@gmail.com',
     smtp: 'drdjhaeugbyjyzls',
-    Creator: 'SHIELD'
+    Creator: 'SHIELD',
+    sessions_ig: ''
 };
