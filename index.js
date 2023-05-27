@@ -49,7 +49,9 @@ app.use('/instagram', ig);
 app.use('/users', userRouters);
 
 app.get('/', isAuthenticated, async(req, res) => {
-  res.render('index', { layout: false })
+  let getinfo =  await getApikey(req.user.id)
+  let { apikey, username, email } = getinfo
+  res.render('index', { layout: false, apikey: apikey, username: username, email: email })
 })
 app.get('/anime', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id)

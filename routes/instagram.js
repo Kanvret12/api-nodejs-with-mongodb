@@ -40,6 +40,7 @@ sh.all('/igstalk', async (req, res) => {
 });
 sh.all('/stories', async (req, res) => {
 	if (!req.query.user) throw res.json({status: 200, message: "user parameter cannot be empty"})
+	await apiFunc(req, res);
 	ig.fetchStories(req.query.user)
 	.then((v) => {
 		res.status(200).json(v);
