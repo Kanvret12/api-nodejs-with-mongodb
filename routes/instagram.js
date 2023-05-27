@@ -14,5 +14,15 @@ sh.all('/igdl', async (req, res) => {
 		res.send({ status: 400, result: e.toString() })
 		});
 });
+sh.all('/igstalk', async (req, res) => {
+	if (!req.query.user) throw res.json({status: 200, message: "user parameter cannot be empty"})
+	ig.fetchUser(req.query.url)
+	.then((v) => {
+		res.status(200).json(v);
+	});
+	.catch((e) => {
+		res.send({ status: 400, result: e.toString() })
+		});
+});
 
 module.exports = sh;
