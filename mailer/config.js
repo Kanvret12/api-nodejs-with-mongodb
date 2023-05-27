@@ -21,7 +21,9 @@ module.exports.sendVerifyEmail = async (email, token) => {
       html: `
       <!DOCTYPE html>
       <html>
-        <button href=${url}> CLICK TO VERIFI </button>
+      <center>
+        <a href=${url}> CLICK TO VERIFI </a>
+      </center>
       </html>
   
     `,

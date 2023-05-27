@@ -73,6 +73,7 @@ router.get('/verifyemail', async (req, res) => {
             let apikey = randomText(16);
             addUser(check.email, check.username, check.password, apikey)
             await Token.findOneAndDelete({ token: token });
+            req.flash('success_msg', ' email has been verified ');
             res.redirect('/users/login');
         } else {
             if (req.User) {
