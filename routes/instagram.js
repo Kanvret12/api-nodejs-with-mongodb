@@ -8,9 +8,11 @@ sh.all('/igdl', async (req, res) => {
 	if (!req.query.url) throw res.json({status: 200, message: "url parameter cannot be empty"})
 	ig.fetchPost(req.query.url)
 	.then((v) => {
-    res.status(200)
-	.json(v);
+		res.status(200).json(v);
 	});
+	.catch((e) => {
+		res.send({ status: 400, result: e.toString() })
+		});
 });
 
 module.exports = sh;
