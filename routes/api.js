@@ -29,15 +29,17 @@ router.all('/openai', async(req,res) => {
 })
 
 //==    WIBU    ==\\
+router.all('/randomanime', async (req, res) => {
+  try {
+    const json = (await axios.get(`https://raw.githubusercontent.com/Kanvret12/loli/main/anime.json`)).data;
+    const random = json[Math.floor(Math.random() * json.length)];
+    const bf = (await axios.get(random, { responseType: 'arraybuffer' })).data;
+    res.type('png').send(bf);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
 
-router.all('/randomanime', async(req, res) => { 
-    await apiFunc(req,res);
-    scrape.randomanime().then(async(arr) => {
-    random = arr[Math.floor(Math.random() * arr.length)]
-    bf = (await axios.get(random, { responseType: 'arraybuffer' })).data
-    res.type('png').send(bf)
-    }).catch((err) => {res.json(err.message)});
-})
 router.all('/updateanime', async(req, res) => { 
     await apiFunc(req,res);
     scrape.updateanime().then(async(arr) => {

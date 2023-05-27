@@ -50,8 +50,8 @@ app.get('/', isAuthenticated, async(req, res) => {
 })
 app.get('/anime', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id)
-  let { apikey, username } = getinfo
-  res.render('anime', { layout: false, apikey: apikey, username: username })
+  let { apikey, username, email } = getinfo
+  res.render('anime', { layout: false, apikey: apikey, username: username, email: email })
 })
 
 
