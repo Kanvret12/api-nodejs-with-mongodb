@@ -55,28 +55,37 @@ app.get('/', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;
   const userCount = await User.countDocuments()
-  res.render('index', { layout: false, apikey: apikey, username: username, email: email , userCount: userCount});
+  res.render('index', { layout: false, active: 'index', apikey: apikey, username: username, email: email , userCount: userCount});
 });
 
 app.get('/anime', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;
-  res.render('anime', { layout: false, apikey: apikey, username: username, email: email });
+  res.render('anime', { layout: false, active: 'anime',apikey: apikey, username: username, email: email });
 });
 
 app.get('/generator', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;
-  res.render('generator', { layout: false, apikey: apikey, username: username, email: email });
+  res.render('generator', { layout: false, active: 'generator', apikey: apikey, username: username, email: email });
 });
-
+app.get('/convert', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  res.render('convert', { layout: false, active: 'convert', apikey: apikey, username: username, email: email });
+});
+app.get('/downloader', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  res.render('downloader', { layout: false, active: 'downloader', apikey: apikey, username: username, email: email });
+});
 app.use(function (req, res) {
   res.status(404).set("Content-Type", "text/html").render('notFound', { layout: false, statusCode: res.statusCode });
 });
 
 const server = http.createServer(app);
 const io = socketIO(server);
-const updateInterval = 1000; 
+const updateInterval = 100; 
 setInterval(async () => {
   try {
     const userCount = await User.countDocuments();
