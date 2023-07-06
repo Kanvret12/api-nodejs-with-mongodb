@@ -1,4 +1,52 @@
 /********** Template CSS **********/
+#apple,
+#twitter,
+#github,
+#whatsapp{
+  font-size: 3em;
+  background-color: #18191f;
+  color: #fff;
+  box-shadow: 2px 2px 2px #00000080, 10px 1px 12px #00000080,
+    2px 2px 10px #00000080, 2px 2px 3px #00000080, inset 2px 2px 10px #00000080,
+    inset 2px 2px 10px #00000080, inset 2px 2px 10px #00000080,
+    inset 2px 2px 10px #00000080;
+  border-radius: 15px;
+  padding: 6px 12px;
+  margin: 0 20px;
+  animation: animate 3s linear infinite;
+  text-shadow: 0 0 50px #0072ff, 0 0 100px #0072ff, 0 0 150px #0072ff,
+    0 0 200px #0072ff;
+}
+@media (max-width: 767px) {
+    #apple,
+    #twitter,
+    #github,
+    #whatsapp {
+      font-size: 2em;
+      padding: 4px 8px;
+      margin: 0 10px;
+    }
+  }
+  
+#twitter {
+  animation-delay: 0.3s;
+}
+#whatsapp {
+    animation-delay: 0.4s;
+  }
+  
+#github {
+  animation-delay: 0.1s;
+}
+
+@keyframes animate {
+  from {
+    filter: hue-rotate(0deg);
+  }
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
 
 :root {
     --primary: #009CFF;
@@ -211,7 +259,11 @@
 .content .navbar .dropdown-toggle[aria-expanded=true]::after {
     transform: rotate(-180deg);
 }
-
+.dropdown-menu a.dropdown-item:hover,
+    .dropdown-menu a.dropdown-item:focus {
+      background-color: #212529; /* Ganti dengan warna latar belakang yang diinginkan */
+      color: #fff; /* Ganti dengan warna teks yang diinginkan */
+    }
 @media (max-width: 575.98px) {
     .content .navbar .navbar-nav .nav-link {
         margin-left: 15px;

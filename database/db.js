@@ -1,4 +1,3 @@
-const { limitCount } = require('../config');
 const { User } = require('./model');
 const { Token } = require('./verifikasi');
 

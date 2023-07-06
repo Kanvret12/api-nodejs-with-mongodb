@@ -9,4 +9,4 @@ const Users = mongoose.Schema({
     premium: { type: Array },
     limit: { type: Number }
 }, { versionKey: false });
-module.exports.User = mongoose.model('api', Users);
+module.exports.User = mongoose.model('user', Users);

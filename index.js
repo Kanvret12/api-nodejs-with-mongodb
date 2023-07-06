@@ -8,20 +8,23 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const MemoryStore = require('memorystore')(session);
 const compression = require('compression');
-/* auth */
 const { isAuthenticated } = require('./lib/auth');
 const { connectMongoDb } = require('./database/connect');
 const { getApikey, getDataByID } = require('./database/db');
+const http = require('http');
+const os = require('os');
+const socketIO = require('socket.io');
+const { User } = require('./database/model')
+
 connectMongoDb();
 
-/* config */
+/* Configurations */
 app.set('json spaces', 4);
-app.set('trust proxy', 1);
+app.set('trust proxy', 8);
 app.set('view engine', 'ejs');
 app.use(compression());
 app.use(rateLimit({ windowMs: 1 * 60 * 1000,  max: 2000, message: 'Terlalu banyak requests' }));
 app.use(expressLayout);
-// app.use(express.static('assets'));
 app.use('/assets', express.static('assets'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -37,9 +40,9 @@ app.use(function(req, res, next) {
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
   next();
-})
+});
 
-/* route */
+/* Routers */
 const apiRouters = require('./routes/api');
 const userRouters = require('./routes/users');
 const ig = require('./routes/instagram');
@@ -49,30 +52,57 @@ app.use('/instagram', ig);
 app.use('/users', userRouters);
 
 app.get('/', isAuthenticated, async(req, res) => {
-  let getinfo =  await getApikey(req.user.id)
-  let { apikey, username, email } = getinfo
-  res.render('index', { layout: false, apikey: apikey, username: username, email: email })
-})
-app.get('/anime', isAuthenticated, async(req, res) => {
-  let getinfo =  await getApikey(req.user.id)
-  let { apikey, username, email } = getinfo
-  res.render('anime', { layout: false, apikey: apikey, username: username, email: email })
-})
-app.get('/generator', isAuthenticated, async(req, res) => {
-  let getinfo =  await getApikey(req.user.id)
-  let { apikey, username, email } = getinfo
-  res.render('generator', { layout: false, apikey: apikey, username: username, email: email })
-})
-
-
-
-
-
-app.use(function (req, res) {
-  res.status(404).set("Content-Type", "text/html")
-  .render('notFound', { layout: false, statusCode: res.statusCode });
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  const userCount = await User.countDocuments()
+  res.render('index', { layout: false, apikey: apikey, username: username, email: email , userCount: userCount});
 });
 
-app.listen(80, () => {
+app.get('/anime', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  res.render('anime', { layout: false, apikey: apikey, username: username, email: email });
+});
+
+app.get('/generator', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  res.render('generator', { layout: false, apikey: apikey, username: username, email: email });
+});
+
+app.use(function (req, res) {
+  res.status(404).set("Content-Type", "text/html").render('notFound', { layout: false, statusCode: res.statusCode });
+});
+
+const server = http.createServer(app);
+const io = socketIO(server);
+const updateInterval = 1000; 
+setInterval(async () => {
+  try {
+    const userCount = await User.countDocuments();
+    io.emit('userCountUpdate', userCount);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}, updateInterval);
+io.on('connection', (socket) => {
+
+  // Send memory usage to the client
+  socket.on('getMemoryUsage', () => {
+    const memoryUsage = process.memoryUsage();
+    const availableMemory = os.freemem();
+    const totalMemoryMB = os.totalmem(); // Get the available system memory
+     // Get the available system memory
+    const memoryData = {
+      heapUsed: memoryUsage.heapUsed,
+      rss: memoryUsage.rss,
+      available: availableMemory,
+      total: totalMemoryMB,
+    };
+    socket.emit('memoryUsage', memoryData);
+  });
+});
+
+server.listen(80, () => {
   console.log(`App listening at http://localhost:80`);
 });
