@@ -15,6 +15,8 @@ const http = require('http');
 const os = require('os');
 const socketIO = require('socket.io');
 const { User } = require('./database/model');
+const {resetReqDay} = require('./database/resetReq');
+resetReqDay();
 
 connectMongoDb();
 
@@ -79,6 +81,11 @@ app.get('/downloader', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;
   res.render('downloader', { layout: false, active: 'downloader', apikey: apikey, username: username, email: email });
+});
+app.get('/settings', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  res.render('settings', { layout: false, apikey: apikey, username: username, email: email });
 });
 app.use(function (req, res) {
   res.status(404).set("Content-Type", "text/html").render('notFound', { layout: false, statusCode: res.statusCode });

@@ -1,0 +1,36 @@
+<%- include('layouts/Footer')  %> 
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-md-6 col-xl-4">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">
+                    <i class="bi bi-key text-primary me-2"></i>
+                    Change Key
+                </h6>
+                <form action="changekey" method="POST">
+                    <input name="key" class="form-control mb-3" type="text" placeholder="Your Key" aria-label="default input example" required>
+                    <input class="form-control mb-3" type="text" name="newkey" placeholder="New Key" aria-label="default input example" required>
+                    <button type="submit" class="btn btn-sm btn-primary text-dark">Change</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-md-6 col-xl-4">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">
+                    <i class="bi bi-key text-primary me-2"></i>
+                    Change Name
+                </h6>
+                <form action="changename" method="POST">
+                    <input name="key" class="form-control mb-3" type="text" placeholder="Your Key" aria-label="default input example" required>
+                    <input class="form-control mb-3" type="text" name="newkey" placeholder="New Key" aria-label="default input example" required>
+                    <button type="submit" class="btn btn-sm btn-primary text-dark">Change</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('layouts/Footer')  %> 
