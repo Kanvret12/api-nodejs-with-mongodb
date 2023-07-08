@@ -10,11 +10,11 @@ const MemoryStore = require('memorystore')(session);
 const compression = require('compression');
 const { isAuthenticated } = require('./lib/auth');
 const { connectMongoDb } = require('./database/connect');
-const { getApikey, getDataByID } = require('./database/db');
+const { getApikey, getDataByID, cekTotalReq } = require('./database/db');
 const http = require('http');
 const os = require('os');
 const socketIO = require('socket.io');
-const { User } = require('./database/model')
+const { User } = require('./database/model');
 
 connectMongoDb();
 
@@ -52,10 +52,11 @@ app.use('/instagram', ig);
 app.use('/users', userRouters);
 
 app.get('/', isAuthenticated, async(req, res) => {
+  const {count, reqday} = await cekTotalReq();
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;
   const userCount = await User.countDocuments()
-  res.render('index', { layout: false, active: 'index', apikey: apikey, username: username, email: email , userCount: userCount});
+  res.render('index', { layout: false, active: 'index', apikey: apikey, username: username, email: email , userCount: userCount, count: count,reqday: reqday});
 });
 
 app.get('/anime', isAuthenticated, async(req, res) => {
@@ -94,8 +95,7 @@ setInterval(async () => {
     console.error('Error:', error);
   }
 }, updateInterval);
-io.on('connection', (socket) => {
-
+io.on('connection', async socket => {
   // Send memory usage to the client
   socket.on('getMemoryUsage', () => {
     const memoryUsage = process.memoryUsage();
@@ -111,7 +111,6 @@ io.on('connection', (socket) => {
     socket.emit('memoryUsage', memoryData);
   });
 });
-
 server.listen(80, () => {
   console.log(`App listening at http://localhost:80`);
 });

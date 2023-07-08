@@ -1,7 +1,4 @@
-const { User } = require('./model');
-const { Token } = require('./verifikasi');
-
-
+const { User, Visitor, Token } = require('./model');
 
     async function addUser(email, username, password, apikey) {
         let obj = { email, username, password, apikey };
@@ -13,6 +10,16 @@ const { Token } = require('./verifikasi');
         User.create(obj);
     }
     module.exports.addUser = addUser
+    async function VisitorCreate(visitor) {
+        let obj = {visitor};
+        var users = {};
+        Visitor.find({}, function (err, user) {
+            users[user._id] = user;
+        });
+        console.log(users)
+        Visitor.create(obj);
+    }
+    module.exports.VisitorCreate = VisitorCreate
 
     async function NotVer(email, username, password, token) {
         let obj = { email, username, password, token};
@@ -56,3 +63,8 @@ const { Token } = require('./verifikasi');
         }
     }
     module.exports.cekKey = cekKey;
+    async function cekTotalReq() {
+        let visitor = await Visitor.findOne();
+        return {count: visitor.count, reqday: visitor.reqday} ;
+      }
+    module.exports.cekTotalReq = cekTotalReq

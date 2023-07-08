@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const {Token} = require('../database/verifikasi');
+const {Token} = require('../database/model');
 const sendEmail = require("../mailer/config");
 const crypto = require("crypto");
 

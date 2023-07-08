@@ -1,3 +1,5 @@
+
+$(document).ready(function() {
 const socket = io();
 
 // Update memory usage in HTML
@@ -28,3 +30,5 @@ socket.on('userCountUpdate', (userCount) => {
     const userCountElement = document.getElementById('user-count');
     userCountElement.textContent = count;
 }
+});
+
