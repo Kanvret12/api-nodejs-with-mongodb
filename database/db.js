@@ -67,4 +67,4 @@ const { User, Visitor, Token } = require('./model');
         let visitor = await Visitor.findOne();
         return {count: visitor.count, reqday: visitor.reqday} ;
       }
-    module.exports.cekTotalReq = cekTotalReq
+    module.exports.cekTotalReq = cekTotalReq;

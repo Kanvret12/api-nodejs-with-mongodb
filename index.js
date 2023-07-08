@@ -82,6 +82,11 @@ app.get('/downloader', isAuthenticated, async(req, res) => {
   let { apikey, username, email } = getinfo;
   res.render('downloader', { layout: false, active: 'downloader', apikey: apikey, username: username, email: email });
 });
+app.get('/webs', isAuthenticated, async(req, res) => {
+  let getinfo =  await getApikey(req.user.id);
+  let { apikey, username, email } = getinfo;
+  res.render('webs', { layout: false, active: 'webs', apikey: apikey, username: username, email: email });
+});
 app.get('/settings', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;

@@ -98,7 +98,6 @@ router.all('/tiktokdl', async (req, res) => {
     await apiFunc(req, res);
     if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
     const data = await scrape.musical(url);
-    // Insert the request into MongoDB
     res.json({ status: message.status, creator: message.creator, result: data });
   } catch (err) {
     res.json(err.message);
@@ -112,11 +111,26 @@ router.all('/twitter', async (req, res) => {
     await apiFunc(req, res);
     if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
     const arr = await scrape.twitter(url);
-    // Insert the request into MongoDB
     res.json({ status: message.status, creator: message.creator, result: arr });
   } catch (err) {
     res.json(err.message);
   }
 });
 
+//==    WEBS    ==\\
+
+router.all('/komiksearch', async (req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
+    let text = req.query.text;
+    await apiFunc(req, res);
+    const arr = await scrape.komikusearch(text);
+    res.json({ status: true, creator: 'SHIELD', result: arr });
+  } catch (err) {
+    res.json(err.message);
+  }
+});
+
+
 module.exports = router;
+
