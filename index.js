@@ -85,7 +85,7 @@ app.get('/downloader', isAuthenticated, async(req, res) => {
 app.get('/settings', isAuthenticated, async(req, res) => {
   let getinfo =  await getApikey(req.user.id);
   let { apikey, username, email } = getinfo;
-  res.render('settings', { layout: false, apikey: apikey, username: username, email: email });
+  res.render('settings', { layout: false, active: 'index',apikey: apikey, username: username, email: email });
 });
 app.use(function (req, res) {
   res.status(404).set("Content-Type", "text/html").render('notFound', { layout: false, statusCode: res.statusCode });
