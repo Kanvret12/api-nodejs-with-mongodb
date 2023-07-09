@@ -4,8 +4,10 @@ let { igApi, getCookie } = require("insta-fetcher");
 let { sessions_ig } = require('../config');
 let ig = new igApi(sessions_ig);
 const { cekKey } = require('../database/db');
+const {Visitor} = require('../database/model');
 
 async function apiFunc(req,res){
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
     return new Promise(async(resolve, reject) => {
         var apikey = req.query.apikey;
         var user = await cekKey(apikey);
@@ -17,6 +19,7 @@ async function apiFunc(req,res){
     })
 }
 sh.all('/igdl', async (req, res) => {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
 	if (!req.query.url) throw res.json({status: 200, message: "url parameter cannot be empty"})
 	await apiFunc(req, res);
 	ig.fetchPost(req.query.url)
@@ -28,6 +31,7 @@ sh.all('/igdl', async (req, res) => {
 		});
 });
 sh.all('/igstalk', async (req, res) => {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
 	if (!req.query.user) throw res.json({status: 200, message: "user parameter cannot be empty"})
 	await apiFunc(req, res);
 	ig.fetchUser(req.query.user)
