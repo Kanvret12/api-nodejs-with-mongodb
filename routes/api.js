@@ -123,8 +123,20 @@ router.all('/komiksearch', async (req, res) => {
   try {
     await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
     let text = req.query.text;
+    let apikey = req.query.apikey
     await apiFunc(req, res);
-    const arr = await scrape.komikusearch(text);
+    const arr = await scrape.komikusearch(text, apikey);
+    res.json({ status: true, creator: 'SHIELD', result: arr });
+  } catch (err) {
+    res.json(err.message);
+  }
+});
+router.all('/komikdetail', async (req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
+    let url = req.query.url;
+    await apiFunc(req, res);
+    const arr = await scrape.komikdetail(url);
     res.json({ status: true, creator: 'SHIELD', result: arr });
   } catch (err) {
     res.json(err.message);
