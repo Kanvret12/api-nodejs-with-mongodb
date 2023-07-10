@@ -4,7 +4,7 @@ module.exports = {
     recaptcha_key_1: '',
     recaptcha_key_2: '',
     dbURI: 'mongodb+srv://shield:Kelebihan@cluster0.lxds2ta.mongodb.net/api?retryWrites=true&w=majority&ssl=true',
-    keyAi: 'Bearer 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',
+    keyAi: 'Bearer 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',
     email: 'saumamardhatullah@gmail.com',
     smtp: 'drdjhaeugbyjyzls',
     Creator: 'SHIELD',
