@@ -42,7 +42,6 @@ router.all('/randomanime', async (req, res) => {
   try {
     await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
     await apiFunc(req, res);
- const arr = await scrape.randomanime();
     const json = (await axios.get(`https://raw.githubusercontent.com/Kanvret12/loli/main/anime.json`)).data;
     const random = json[Math.floor(Math.random() * json.length)];
     const bf = (await axios.get(random, { responseType: 'arraybuffer' })).data;
@@ -82,14 +81,37 @@ router.all('/waifu', async (req, res) => {
   try {
     await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
     await apiFunc(req, res);
-    const json = (await axios.get(`https://raw.githubusercontent.com/Kanvret12/loli/main/waifu.json`)).data;
-    const random = json[Math.floor(Math.random() * json.length)];
-    const bf = (await axios.get(random, { responseType: 'arraybuffer' })).data;
+    const json = (await axios.get(`https://api.waifu.pics/sfw/waifu`)).data;
+    const bf = (await axios.get(json.url, { responseType: 'arraybuffer' })).data;
     res.type('png').send(bf);
   } catch (error) {
-    res.status(500).send('Internal Server Error');
+    res.send(error.toString());
   }
 });
+router.all('/neko', async (req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
+    await apiFunc(req, res);
+    const json = (await axios.get(`https://api.waifu.pics/sfw/neko`)).data;
+    const bf = (await axios.get(json.url, { responseType: 'arraybuffer' })).data;
+    res.type('png').send(bf);
+  } catch (error) {
+    res.send(error.toString());
+  }
+});
+router.all('/megumin', async (req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
+    await apiFunc(req, res);
+    const json = (await axios.get(`https://api.waifu.pics/sfw/megumin`)).data;
+    const bf = (await axios.get(json.url, { responseType: 'arraybuffer' })).data;
+    res.type('png').send(bf);
+  } catch (error) {
+    res.send(error.toString());
+  }
+});
+
+
 
 //==    DOWNLOADER    ==\\
 
