@@ -123,6 +123,6 @@ io.on('connection', async socket => {
     socket.emit('memoryUsage', memoryData);
   });
 });
-server.listen(80, () => {
+server.listen(4000, () => {
   console.log(`App listening at http://localhost:80`);
 });

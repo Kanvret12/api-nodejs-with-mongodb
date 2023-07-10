@@ -12,7 +12,7 @@ const smtpTransport = nodemailer.createTransport({
 
 module.exports.sendVerifyEmail = async (email, token) => {
     return new Promise(async(resolve, rejecet) => {
-      var url = `http://localhost:80/users/verifyemail?token=` + token;
+      var url = `http://54.147.200.35/users/verifyemail?token=` + token;
   
     await smtpTransport.sendMail({
       from: process.env.USER,
