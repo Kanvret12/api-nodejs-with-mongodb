@@ -219,7 +219,7 @@ router.get('/photooxy/pubg', async (req, res, next) => {
 	var text2 = req.query.text2
   await apiFunc(req, res);
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"})  
-	alip.photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text,text2])
+	photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text,text2])
 .then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
