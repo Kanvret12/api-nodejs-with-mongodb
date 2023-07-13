@@ -16,6 +16,7 @@ const Token = mongoose.Schema({
     username: { type: String },
     password: { type: String},
     token: { type: String},
+    createdAt: { type: Date, expires: '3h', default: Date.now },
 });
 module.exports.Token = mongoose.model('NotVeri', Token);
 

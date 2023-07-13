@@ -22,18 +22,30 @@ async function apiFunc(req, res) {
 
 //==    CHAT GPT    ==\\
 
+// router.all('/openai', async (req, res) => {
+//   await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1} });
+//   let text = req.query.text;
+//   await apiFunc(req, res);
+//   scrape
+//     .openai(text)
+//     .then(async (result) => {
+//       res.json({ status: true, creator: 'SHIELD', result: result });
+//     })
+//     .catch((err) => {
+//       res.json(err.message);
+//     });
+// });
 router.all('/openai', async (req, res) => {
-  await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1} });
-  let text = req.query.text;
-  await apiFunc(req, res);
-  scrape
-    .openai(text)
-    .then(async (result) => {
-      res.json({ status: true, creator: 'SHIELD', result: result });
-    })
-    .catch((err) => {
-      res.json(err.message);
-    });
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1}});
+    let text = req.query.text;
+    await apiFunc(req, res);
+    if (!text) return res.json({ status: message.status, creator: message.creator, message: message.Text });
+    const json = (await axios.get(`https://aemt.me/openai?text=${text}`)).data;
+    res.json({ status: message.status, creator: message.creator, result: json.result });
+  } catch(err) {
+    res.send(err.toString());
+  }
 });
 
 //==    WIBU    ==\\
@@ -170,3 +182,4 @@ router.all('/komikdetail', async (req, res) => {
 
 module.exports = router;
 
+s
