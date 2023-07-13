@@ -194,4 +194,36 @@ router.all('/textpro/pencil', async (req, res, next) => {
  res.json(loghandler.error)
 })
 })
+
+//==  PHOTOOXY   ==\\
+router.get('/photooxy/naruto', async (req, res, next) => {
+	let text = req.query.text;
+  await apiFunc(req, res);
+  if (!text) return res.json({ status: message.status, creator: message.creator, message: message.Text });
+	photooxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text])
+.then((data) =>{ 
+	res.set({'Content-Type': 'image/png'})
+	res.send(data)
+	})
+.catch((err) =>{
+ res.json(loghandler.error)
+})
+})
+
+
+router.get('/photooxy/pubg', async (req, res, next) => {l
+  let text = req.query.text;
+  if (!text) return res.json({ status: message.status, creator: message.creator, message: message.Text });  
+	var text2 = req.query.text2
+  await apiFunc(req, res);
+	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"})  
+	alip.photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text,text2])
+.then((data) =>{ 
+	res.set({'Content-Type': 'image/png'})
+	res.send(data)
+	})
+.catch((err) =>{
+ res.json(loghandler.error)
+})
+})
 module.exports = router;
