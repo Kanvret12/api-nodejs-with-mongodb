@@ -6,6 +6,8 @@ const axios = require('axios');
 const message = { status: true, creator: 'SHIELD', Url: '[URL] Masukan Parameter Url', Text: '[TEXT] Masukan Parameter Text' };
 const {Visitor} = require('../database/model');
 const textpro = require("../lib/data/textpro");
+const photooxy = require("../lib/data/photooxy.js");
+
 
 async function apiFunc(req, res) {
   return new Promise(async (resolve, reject) => {
