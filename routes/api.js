@@ -213,7 +213,7 @@ router.get('/photooxy/naruto', async (req, res, next) => {
 })
 
 
-router.get('/photooxy/pubg', async (req, res, next) => {l
+router.get('/photooxy/pubg', async (req, res, next) => {
   let text = req.query.text;
   if (!text) return res.json({ status: message.status, creator: message.creator, message: message.Text });  
 	var text2 = req.query.text2
