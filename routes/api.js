@@ -185,7 +185,7 @@ router.all('/textpro/pencil', async (req, res, next) => {
 	  let text = req.query.text;
     await apiFunc(req, res);
     if (!text) return res.json({ status: message.status, creator: message.creator, message: message.Text });
-	textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text1])
+	textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text])
 .then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
