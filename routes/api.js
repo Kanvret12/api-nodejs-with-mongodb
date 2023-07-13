@@ -5,7 +5,7 @@ const scrape = require('../lib/scrape');
 const axios = require('axios');
 const message = { status: true, creator: 'SHIELD', Url: '[URL] Masukan Parameter Url', Text: '[TEXT] Masukan Parameter Text' };
 const {Visitor} = require('../database/model');
-const textpro = require("../lib/api/textpro");
+const textpro = require("../lib/data/textpro");
 
 async function apiFunc(req, res) {
   return new Promise(async (resolve, reject) => {
