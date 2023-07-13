@@ -181,5 +181,3 @@ router.all('/komikdetail', async (req, res) => {
 
 
 module.exports = router;
-
-s
