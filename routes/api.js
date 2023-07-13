@@ -5,6 +5,7 @@ const scrape = require('../lib/scrape');
 const axios = require('axios');
 const message = { status: true, creator: 'SHIELD', Url: '[URL] Masukan Parameter Url', Text: '[TEXT] Masukan Parameter Text' };
 const {Visitor} = require('../database/model');
+const textpro = require("../lib/api/textpro");
 
 async function apiFunc(req, res) {
   return new Promise(async (resolve, reject) => {
@@ -179,5 +180,18 @@ router.all('/komikdetail', async (req, res) => {
   }
 });
 
-
+//==    TEXT PRO    ==\\
+router.all('/textpro/pencil', async (req, res, next) => {
+	  let text = req.query.text;
+    await apiFunc(req, res);
+    if (!text) return res.json({ status: message.status, creator: message.creator, message: message.Text });
+	textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text1])
+.then((data) =>{ 
+	res.set({'Content-Type': 'image/png'})
+	res.send(data)
+	})
+.catch((err) =>{
+ res.json(loghandler.error)
+})
+})
 module.exports = router;
