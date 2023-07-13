@@ -1,5 +1,6 @@
 module.exports = {
     port: '5000',
+    urlD: 'shield-panel.xyz',
     limitCount: 0,
     recaptcha_key_1: '',
     recaptcha_key_2: '',
