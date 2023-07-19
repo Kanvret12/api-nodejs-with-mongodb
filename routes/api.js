@@ -87,8 +87,8 @@ router.all('/loli', async (req, res) => {
     const random = json[Math.floor(Math.random() * json.length)];
     const bf = (await axios.get(random, { responseType: 'arraybuffer' })).data;
     res.type('png').send(bf);
-  } catch (error) {
-    res.status(500).send('Internal Server Error');
+  } catch (e) {
+    res.json(e.toString());
   }
 });
 
@@ -138,8 +138,8 @@ router.all('/tiktokdl', async (req, res) => {
     if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
     const data = await scrape.musical(url);
     res.json({ status: message.status, creator: message.creator, result: data });
-  } catch (err) {
-    res.json(err.message);
+  } catch (e) {
+    res.json(e.toString());
   }
 });
 
@@ -151,8 +151,21 @@ router.all('/twitter', async (req, res) => {
     if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
     const arr = await scrape.twitter(url);
     res.json({ status: message.status, creator: message.creator, result: arr });
-  } catch (err) {
-    res.json(err.message);
+  } catch (e) {
+    res.json(e.toString());
+  }
+});
+
+router.all('/multidl', async(req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1}});
+    let url = req.query.url;
+    await apiFunc(req, res);
+    if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
+    const arr = await scrape.multidl(url)
+    res.json({ status: message.status, creator: message.creator, result: arr });
+  } catch(e) {
+    res.send(e.toString());
   }
 });
 
@@ -166,8 +179,8 @@ router.all('/komiksearch', async (req, res) => {
     await apiFunc(req, res);
     const arr = await scrape.komikusearch(text, apikey);
     res.json({ status: true, creator: 'SHIELD', result: arr });
-  } catch (err) {
-    res.json(err.message);
+  } catch (e) {
+    res.json(e.toString());
   }
 });
 router.all('/komikdetail', async (req, res) => {
@@ -177,8 +190,8 @@ router.all('/komikdetail', async (req, res) => {
     await apiFunc(req, res);
     const arr = await scrape.komikdetail(url);
     res.json({ status: true, creator: 'SHIELD', result: arr });
-  } catch (err) {
-    res.json(err.message);
+  } catch (e) {
+    res.json(e.toString());
   }
 });
 
@@ -192,8 +205,8 @@ router.all('/textpro/pencil', async (req, res, next) => {
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-.catch((err) =>{
- res.json(loghandler.error)
+.catch((e) =>{
+  res.json(e.toString());
 })
 })
 
@@ -207,8 +220,8 @@ router.get('/photooxy/naruto', async (req, res, next) => {
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-.catch((err) =>{
- res.json(loghandler.error)
+.catch((e) =>{
+  res.json(e.toString());
 })
 })
 
@@ -224,8 +237,8 @@ router.get('/photooxy/pubg', async (req, res, next) => {
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-.catch((err) =>{
- res.json(loghandler.error)
+.catch((e) =>{
+  res.json(e.toString());
 })
 })
 module.exports = router;
