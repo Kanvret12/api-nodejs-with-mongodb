@@ -130,18 +130,18 @@ router.all('/megumin', async (req, res) => {
 
 //==    DOWNLOADER    ==\\
 
-router.all('/tiktokdl', async (req, res) => {
-  try {
-    await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
-    let url = req.query.url;
-    await apiFunc(req, res);
-    if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
-    const data = await scrape.musical(url);
-    res.json({ status: message.status, creator: message.creator, result: data });
-  } catch (e) {
-    res.json(e.toString());
-  }
-});
+// router.all('/tiktokdl', async (req, res) => {
+//   try {
+//     await Visitor.updateOne({}, { $inc: { count: 1, reqday: 1 } });
+//     let url = req.query.url;
+//     await apiFunc(req, res);
+//     if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
+//     const data = await scrape.musical(url);
+//     res.json({ status: message.status, creator: message.creator, result: data });
+//   } catch (e) {
+//     res.json(e.toString());
+//   }
+// });
 
 router.all('/twitter', async (req, res) => {
   try {
@@ -150,6 +150,30 @@ router.all('/twitter', async (req, res) => {
     await apiFunc(req, res);
     if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
     const arr = await scrape.twitter(url);
+    res.json({ status: message.status, creator: message.creator, result: arr });
+  } catch (e) {
+    res.json(e.toString());
+  }
+});
+router.all('/facebook', async (req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1,reqday: 1 } });
+    let url = req.query.url;
+    await apiFunc(req, res);
+    if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
+    const arr = await scrape.facebook(url);
+    res.json({ status: message.status, creator: message.creator, result: arr });
+  } catch (e) {
+    res.json(e.toString());
+  }
+});
+router.all('/tiktokdl', async (req, res) => {
+  try {
+    await Visitor.updateOne({}, { $inc: { count: 1,reqday: 1 } });
+    let url = req.query.url;
+    await apiFunc(req, res);
+    if (!url) return res.json({ status: message.status, creator: message.creator, message: message.Url });
+    const arr = await scrape.tiktokdl(url);
     res.json({ status: message.status, creator: message.creator, result: arr });
   } catch (e) {
     res.json(e.toString());
