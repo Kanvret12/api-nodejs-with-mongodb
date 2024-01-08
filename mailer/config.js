@@ -1,7 +1,7 @@
 const {smtp, email, urlD} =require('../config');
 const nodemailer = require("nodemailer");
 const smtpTransport = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: 'smtp.zoho.com',
     port: 465,
     secure: true,
   auth: {
