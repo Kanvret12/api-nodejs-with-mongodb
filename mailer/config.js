@@ -1,4 +1,4 @@
-const {smtp, email, urlD} =require('../config');
+const {smtp, email1, urlD} =require('../config');
 const nodemailer = require("nodemailer");
 const smtpTransport = nodemailer.createTransport({
     host: 'smtp.zoho.com',
