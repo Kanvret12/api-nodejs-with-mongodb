@@ -5,7 +5,7 @@ const smtpTransport = nodemailer.createTransport({
     port: 465,
     secure: true,
   auth: {
-    user: email,
+    user: email1,
     pass: smtp,
   }
 });
@@ -15,7 +15,7 @@ module.exports.sendVerifyEmail = async (email, token) => {
       var url = `${urlD}/users/verifyemail?token=` + token;
   
     await smtpTransport.sendMail({
-      from: process.env.USER,
+      from: email1,
       to: email,
       subject: "VERIFIKASI EMAIL ANDA",
       html: `
