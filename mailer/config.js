@@ -1,11 +1,11 @@
-const {smtp, email1, urlD} =require('../config');
+const {smtp, email, urlD} =require('../config');
 const nodemailer = require("nodemailer");
 const smtpTransport = nodemailer.createTransport({
     host: 'smtp.zoho.com',
     port: 465,
     secure: true,
   auth: {
-    user: email1,
+    user: email,
     pass: smtp,
   }
 });
@@ -15,7 +15,7 @@ module.exports.sendVerifyEmail = async (email, token) => {
       var url = `${urlD}/users/verifyemail?token=` + token;
   
     await smtpTransport.sendMail({
-      from: email1,
+      from: process.env.USER,
       to: email,
       subject: "VERIFIKASI EMAIL ANDA",
       html: `
